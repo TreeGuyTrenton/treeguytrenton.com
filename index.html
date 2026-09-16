@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- start the hero downloading during HTML parse, not after it -->
+<link rel="preload" as="image" href="media/hero-poster.jpg" fetchpriority="high">
+<link rel="preload" as="video" type="video/mp4" href="media/hero-mobile.mp4" media="(max-width:900px)">
+<link rel="preload" as="video" type="video/mp4" href="media/hero.mp4" media="(min-width:901px)">
 <style>
 :root{
   --bg:#0E120F; --bg2:#141A15; --panel:#1A211B;
@@ -334,7 +338,21 @@ footer{border-top:1px solid var(--line); padding:70px 0 36px;}
 </div></nav>
 
 <header class="hero" id="top">
-  <video id="heroVid" autoplay muted loop playsinline preload="none" poster="media/hero-poster.jpg"></video>
+  <video id="heroVid" autoplay muted loop playsinline preload="auto" poster="media/hero-poster.jpg"></video>
+  <script>
+  // runs here, not at the end of the body, so the download starts immediately.
+  // picks a light file on phones / slow or data-saver connections.
+  (function(){ const v=document.getElementById('heroVid'); if(!v) return;
+    const c=navigator.connection||{};
+    const light = window.matchMedia('(max-width:900px)').matches || c.saveData===true || /(^|-)2g$/.test(c.effectiveType||'');
+    v.src = light ? 'media/hero-mobile.mp4' : 'media/hero.mp4';
+    v.load();
+    const go=()=>v.play().catch(()=>{});
+    go();
+    v.addEventListener('loadeddata',go,{once:true});
+    v.addEventListener('canplay',go,{once:true});
+  })();
+  </script>
   <div class="scrim"></div>
   <div class="side">Breckenridge, CO &middot; 39.48&deg;N</div>
   <div class="wrap">
@@ -567,13 +585,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 36px;}
   addEventListener('load',jump);
   addEventListener('pageshow',e=>{ if(e.persisted) jump(); });
 })();
-// hero video: pick a light file on phones / slow or data-saver connections
-(function(){ const v=document.getElementById('heroVid'); if(!v) return;
-  const c=navigator.connection||{};
-  const light = window.matchMedia('(max-width:900px)').matches || c.saveData===true || /(^|-)2g$/.test(c.effectiveType||'');
-  v.src = light ? 'media/hero-mobile.mp4' : 'media/hero.mp4';
-  v.load(); v.play().catch(()=>{});
-})();
+// (hero video setup runs inline next to the <video> tag, near the top of the body)
 // nav scrolled
 const bar=document.querySelector('nav.bar');
 addEventListener('scroll',()=>{ bar.classList.toggle('scrolled', scrollY>40); });
