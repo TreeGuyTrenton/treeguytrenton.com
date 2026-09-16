@@ -552,6 +552,21 @@ footer{border-top:1px solid var(--line); padding:70px 0 36px;}
 </div>
 
 <script>
+// reload always starts at the top.
+// the browser tries to restore your old scroll position before the videos and
+// photos have loaded, so it lands somewhere arbitrary once the page grows.
+(function(){
+  if(!('scrollRestoration' in history)) return;
+  history.scrollRestoration='manual';
+  const jump=()=>{
+    const h=location.hash&&document.querySelector(location.hash);
+    if(h) h.scrollIntoView(); else window.scrollTo(0,0);
+  };
+  jump();
+  addEventListener('DOMContentLoaded',jump);
+  addEventListener('load',jump);
+  addEventListener('pageshow',e=>{ if(e.persisted) jump(); });
+})();
 // hero video: pick a light file on phones / slow or data-saver connections
 (function(){ const v=document.getElementById('heroVid'); if(!v) return;
   const c=navigator.connection||{};
