@@ -518,8 +518,7 @@ footer{border-top:1px solid var(--line); padding:70px 0 36px;}
   <p class="kicker reveal" style="margin-bottom:18px;">Free &middot; No obligation &middot; Fast response</p>
   <h2 class="reveal">Let&rsquo;s clear<br>the air.</h2>
   <p class="sub reveal">Tell us what you need &mdash; we&rsquo;ll walk your property and get you a fair, clear quote.</p>
-  <!-- STEP: replace FORM_ID below with your Formspree endpoint, e.g. action="https://formspree.io/f/abcdwxyz" -->
-  <form class="form reveal" id="quoteForm" action="https://formspree.io/f/FORM_ID" method="POST">
+  <form class="form reveal" id="quoteForm" action="https://formspree.io/f/xoevagbo" method="POST">
     <div class="row">
       <input name="name" type="text" placeholder="Name" aria-label="Your name" required/>
       <input name="phone" type="tel" placeholder="Phone" aria-label="Your phone number" required/>
@@ -620,10 +619,6 @@ document.querySelectorAll('.count').forEach(c=>cio.observe(c));
   const restingText=msg.textContent;
   f.addEventListener('submit', async e=>{
     e.preventDefault();
-    if(f.action.includes('FORM_ID')){
-      msg.textContent='Form not connected yet — add the Formspree endpoint to index.html.';
-      msg.style.color='#E2B34B'; return;
-    }
     const btn=f.querySelector('button[type=submit]'), label=btn.textContent;
     btn.textContent='Sending…'; btn.disabled=true; msg.textContent=restingText; msg.style.color='';
     try{
