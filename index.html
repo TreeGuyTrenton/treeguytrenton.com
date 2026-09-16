@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Tree Guy LLC — Tree Removal, Fire Mitigation &amp; Storm Response | Breckenridge, CO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E120F; --bg2:#141A15; --panel:#1A211B;
+  --text:#F4F0E7; --muted:#9BA39B; --faint:#6E756D;
+  --accent:#C2EC5A; --accentInk:#16210A;
+  --line:rgba(244,240,231,.13);
+  --serif:'Fraunces', Georgia, serif;
+  --sans:'Inter', -apple-system, Segoe UI, Roboto, sans-serif;
+  --r:16px;
+}
+*{margin:0; padding:0; box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;}
+a{color:inherit; text-decoration:none;}
+.wrap{max-width:1240px; margin:0 auto; padding:0 32px;}
+h1,h2,h3{font-family:var(--serif); font-weight:400; line-height:1.02; letter-spacing:-.01em;}
+.kicker{font-family:var(--sans); font-size:12px; letter-spacing:.28em; text-transform:uppercase; color:var(--accent); font-weight:600;}
+.serif-i{font-style:italic;}
+.acc{color:var(--accent);}
+.btn{display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:var(--accentInk); padding:15px 28px; border-radius:100px; font-weight:600; font-size:15px; transition:transform .25s, background .25s;}
+.btn:hover{transform:translateY(-2px); background:#D2F573;}
+.btn.ghost{background:transparent; color:var(--text); border:1px solid var(--line);}
+.btn.ghost:hover{background:rgba(255,255,255,.06);}
+.btn .dot{width:7px; height:7px; border-radius:50%; background:var(--accentInk);}
+/* grain + vignette */
+.grain{position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");}
+/* nav */
+nav.bar{position:fixed; top:0; left:0; right:0; z-index:50; transition:background .4s, backdrop-filter .4s, border-color .4s; border-bottom:1px solid transparent;}
+nav.bar.scrolled{background:rgba(14,18,15,.82); backdrop-filter:blur(14px); border-color:var(--line);}
+nav.bar .wrap{display:flex; align-items:center; justify-content:space-between; height:78px;}
+.logo{display:flex; align-items:center; text-decoration:none;}
+.logo img{height:34px; width:auto; display:block;}
+@media(max-width:600px){ .logo img{height:27px;} }
+.navlinks{display:flex; align-items:center; gap:30px;}
+.isa{height:46px; width:auto; display:block; flex:none;}
+@media(max-width:880px){ .navlinks{gap:0;} .isa{height:38px;} }
+.navlinks a.l{font-size:14px; color:var(--text); opacity:.8; position:relative;}
+.navlinks a.l::after{content:""; position:absolute; left:0; bottom:-5px; width:0; height:1px; background:var(--accent); transition:width .3s;}
+.navlinks a.l:hover::after{width:100%;}
+@media(max-width:880px){ .navlinks a.l{display:none;} }
+/* hero */
+.hero{position:relative; min-height:100svh; display:flex; align-items:flex-start; overflow:hidden;}
+.hero video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
+.hero .scrim{position:absolute; inset:0; z-index:1; background:
+  linear-gradient(180deg, rgba(14,18,15,.55) 0%, rgba(14,18,15,.15) 30%, rgba(14,18,15,.35) 62%, rgba(14,18,15,.96) 100%);}
+.hero .wrap{position:relative; z-index:2; width:100%; padding-bottom:56px; padding-top:clamp(112px,18vh,228px);}
+.hero h1{font-size:clamp(3rem, 9vw, 7.6rem); max-width:14ch; letter-spacing:-.025em;}
+.hero h1 .line{display:block; overflow:hidden;}
+.hero h1 .line span{display:block; transform:translateY(110%); animation:rise 1s cubic-bezier(.16,1,.3,1) forwards;}
+.hero h1 .line:nth-child(2) span{animation-delay:.12s;}
+.hero h1 .line:nth-child(3) span{animation-delay:.24s;}
+@keyframes rise{to{transform:none;}}
+.hero .sub{margin:22px 0 28px; font-size:clamp(1rem,1.6vw,1.2rem); color:#E4E0D6; max-width:40ch; opacity:0; animation:fade 1s ease .5s forwards;}
+.hero .cta-row{display:flex; gap:14px; flex-wrap:wrap; align-items:center; opacity:0; animation:fade 1s ease .65s forwards;}
+.hero .cta-row .b2{display:inline-flex; flex-direction:column; align-items:center; justify-content:center; min-width:200px; height:60px; padding:0 26px; border-radius:100px; border:1px solid rgba(255,255,255,.38); color:var(--heroText); background:transparent; font-weight:600; font-size:15px; line-height:1.1; text-align:center; transition:background .25s, color .25s, border-color .25s, transform .25s;}
+.hero .cta-row .b2:hover{background:var(--accent); color:var(--accentInk); border-color:var(--accent); transform:translateY(-2px);}
+.hero .cta-row .b2 .num{font-size:12px; font-weight:400; opacity:.75; margin-top:3px;}
+.hero .cta-row .b2:hover .num{color:var(--accentInk); opacity:.9;}
+@media(hover:none),(max-width:640px){
+  .hero .cta-row .b2 .num{display:none;}
+  .hero .cta-row{flex-direction:column; align-items:stretch; gap:10px; max-width:340px;}
+  .hero .cta-row .b2{width:100%; min-width:0; height:54px;}
+}
+.hero .micro{margin-top:26px; font-size:13px; color:#C7CcC0; letter-spacing:.02em; opacity:0; animation:fade 1s ease .8s forwards;}
+.hero .micro .star{color:var(--accent);}
+@keyframes fade{to{opacity:1;}}
+.hero .side{position:absolute; right:34px; bottom:64px; z-index:2; writing-mode:vertical-rl; font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted);}
+.scrolldown{position:absolute; left:50%; bottom:26px; transform:translateX(-50%); z-index:2; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); display:flex; flex-direction:column; align-items:center; gap:8px;}
+.scrolldown .ln{width:1px; height:34px; background:linear-gradient(var(--accent), transparent); animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.4; transform:scaleY(.7);}50%{opacity:1; transform:scaleY(1);}}
+@media(max-width:880px){ .hero .side{display:none;} }
+/* marquee */
+.marquee{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--bg); overflow:hidden; padding:18px 0;}
+.mq{display:flex; gap:0; white-space:nowrap; width:max-content; animation:scroll 28s linear infinite;}
+.mq span{font-family:var(--serif); font-size:26px; padding:0 30px; color:var(--text);}
+.mq span.s{color:var(--accent); font-family:var(--sans);}
+@keyframes scroll{to{transform:translateX(-50%);}}
+/* sections */
+section{position:relative; z-index:2;}
+.pad{padding:84px 0;}
+.reveal{opacity:0; transform:translateY(30px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);}
+.reveal.in{opacity:1; transform:none;}
+/* manifesto */
+.manifesto h2{font-size:clamp(2rem,4.6vw,4rem); max-width:18ch; letter-spacing:-.02em;}
+.manifesto .lead{color:var(--muted);}
+/* services hover list */
+.svc{display:grid; grid-template-columns:1fr .8fr; gap:50px; align-items:start;}
+.svc-list{border-top:0;}
+.svc-row{display:grid; grid-template-columns:auto 1fr auto; gap:22px; align-items:center; padding:30px 6px; border-bottom:1px solid var(--line); cursor:pointer; transition:padding .35s, color .35s;}
+.svc-row .num{font-family:var(--serif); font-size:15px; color:var(--faint);}
+.svc-row h3{font-size:clamp(1.5rem,2.6vw,2.3rem); transition:transform .35s, color .35s;}
+.svc-row .arr{font-size:20px; color:var(--faint); transition:transform .35s, color .35s;}
+.svc-row p{grid-column:2; color:var(--muted); font-size:14.5px; max-width:46ch; max-height:0; overflow:hidden; opacity:0; transition:max-height .4s, opacity .4s, margin .4s;}
+.svc-row:hover{padding-left:18px;}
+.svc-row:hover h3{color:var(--accent);}
+.svc-row:hover .arr{color:var(--accent); transform:rotate(-45deg);}
+.svc-row:hover p{max-height:80px; opacity:1; margin-top:12px;}
+.svc-media{position:sticky; top:120px; aspect-ratio:4/3; border-radius:var(--r); overflow:hidden; background:var(--bg2); border:1px solid var(--line);}
+.svc-media .pane{isolation:isolate;}
+.svc-media .pane video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
+.svc-media .pane::before{z-index:1 !important;}
+.svc-media .pane .tag{position:relative; z-index:2;}
+.svc-media .pane{position:absolute; inset:0; display:flex; align-items:flex-end; padding:24px; opacity:0; transform:scale(1.06); transition:opacity .5s, transform .6s; color:var(--text); font-size:13px;}
+.svc-media .pane.on{opacity:1; transform:none;}
+.svc-media .pane .tag{font-family:var(--serif); font-size:22px;}
+.svc-media .pane::before{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(14,18,15,.1), rgba(14,18,15,.7)); z-index:-1;}
+.svc-mobile{display:none;}
+@media(max-width:880px){
+  .svc{display:none;}
+  .svc-mobile{display:block;}
+  .svc-track{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding-bottom:4px;}
+  .svc-track::-webkit-scrollbar{display:none;}
+  .svc-slide{flex:0 0 87%; scroll-snap-align:start; background:var(--bg2); border:1px solid var(--line); border-radius:var(--r); overflow:hidden;}
+  .svc-slide .vid{position:relative; aspect-ratio:16/9; background:#000;}
+  .svc-slide video{width:100%; height:100%; object-fit:cover; display:block;}
+  .svc-slide .body{padding:18px 20px 22px;}
+  .svc-slide h3{font-size:1.3rem; line-height:1.15; margin-bottom:8px;}
+  .svc-slide p{font-size:14px; color:var(--muted); line-height:1.6;}
+  .svc-dots{display:flex; gap:8px; justify-content:center; margin-top:16px;}
+  .svc-dots .d{width:8px; height:8px; border-radius:50%; background:var(--line); transition:.3s;}
+  .svc-dots .d.on{background:var(--accent); width:22px; border-radius:4px;}
+  .svc-swipe{text-align:center; margin-top:12px; color:var(--faint); font-size:11px; letter-spacing:.2em; text-transform:uppercase;}
+}
+.svc-foot{margin-top:18px; color:var(--muted); font-size:14px;}
+/* stats */
+.stats{background:var(--bg2);}
+.stats .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:30px;}
+@media(max-width:760px){ .stats .grid{grid-template-columns:repeat(2,1fr); gap:36px;} }
+.stat .n{font-family:var(--serif); font-size:clamp(2.6rem,5vw,4.2rem); line-height:1; color:var(--accent);}
+.stat .lab{margin-top:10px; color:var(--muted); font-size:14px; max-width:18ch;}
+/* before after */
+.ba-stage{display:flex; justify-content:center;}
+.ba{position:relative; width:100%; aspect-ratio:4/3; border-radius:var(--r); overflow:hidden; border:1px solid var(--line); user-select:none; touch-action:pan-y; background:var(--bg2); transition:max-width .4s, aspect-ratio .4s;}
+.ba.portrait{aspect-ratio:3/4; max-width:min(560px,100%);}
+.ba.landscape{aspect-ratio:4/3; max-width:100%;}
+.ba .layer{position:absolute; inset:0;}
+.ba .layer img{width:100%; height:100%; object-fit:cover; object-position:center; display:block; pointer-events:none;}
+.ba .before{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0);}
+.ba{cursor:ew-resize;}
+.ba .handle{position:absolute; top:0; bottom:0; left:var(--pos,50%); width:2px; background:var(--accent); z-index:3; transform:translateX(-1px);}
+.ba .track{position:absolute; left:18px; right:18px; bottom:34px; height:3px; border-radius:3px; z-index:3;
+  background:rgba(255,255,255,.28); box-shadow:0 1px 6px rgba(0,0,0,.35); pointer-events:none;}
+.ba .track::after{content:""; position:absolute; inset:0; border-radius:3px;
+  background:linear-gradient(90deg, var(--accent) 0 var(--pos,50%), transparent var(--pos,50%) 100%); opacity:.9;}
+.ba .knob{position:absolute; bottom:20px; left:var(--pos,50%); transform:translateX(-50%); z-index:4; width:32px; height:32px; border-radius:50%; background:var(--accent); color:var(--accentInk); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; cursor:ew-resize; box-shadow:0 4px 18px rgba(0,0,0,.45); transition:transform .18s;}
+.ba:hover .knob{transform:translateX(-50%) scale(1.12);}
+.ba .hint{position:absolute; left:50%; bottom:66px; transform:translateX(-50%); z-index:4; white-space:nowrap;
+  background:rgba(0,0,0,.55); color:#fff; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  padding:6px 14px; border-radius:100px; pointer-events:none; transition:opacity .5s;}
+.ba.touched .hint{opacity:0;}
+.ba .badge{position:absolute; top:14px; z-index:3; font-size:11px; letter-spacing:.2em; text-transform:uppercase; background:rgba(0,0,0,.45); padding:5px 12px; border-radius:100px; color:#fff;}
+.ba .badge.bl{left:14px;} .ba .badge.br{right:14px;}
+.ba-cap{display:flex; align-items:center; justify-content:center; gap:16px; margin-top:18px; flex-wrap:wrap;}
+.ba-nav{display:flex; align-items:center; gap:12px;}
+.ba-count{font-family:var(--serif); color:var(--muted); font-size:14px; min-width:62px; text-align:center;}
+.ba-arrow{width:46px; height:46px; border-radius:50%; border:1px solid var(--line); background:transparent; color:var(--text); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; transition:.25s;}
+.ba-arrow:hover{border-color:var(--accent); color:var(--accent); background:rgba(255,255,255,.05);}
+.ba-dots{display:flex; gap:8px; justify-content:center; margin-top:18px;}
+.ba-dot{width:8px; height:8px; border-radius:50%; background:var(--line); cursor:pointer; transition:.3s;}
+.ba-dot.on{background:var(--accent); width:22px; border-radius:4px;}
+/* split bands */
+.band{border-top:1px solid var(--line);}
+.band .wrap{display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:center; padding:62px 32px;}
+@media(max-width:760px){ .band .wrap{grid-template-columns:1fr;} }
+.band h2{font-size:clamp(1.8rem,3.4vw,2.8rem); max-width:16ch;}
+.band p{color:var(--muted); margin-top:14px; max-width:46ch;}
+.band .links a{color:var(--accent); border-bottom:1px solid var(--accent); padding-bottom:2px; margin-right:22px; font-size:14px; display:inline-block; margin-top:10px;}
+/* reviews */
+.revhead{display:flex; flex-direction:column; align-items:flex-start; gap:12px; margin-bottom:42px; padding-bottom:26px; border-bottom:1px solid var(--line);}
+.revhead p{color:var(--muted);}
+.revwrap{overflow:hidden;}
+.revtrack{display:flex; gap:20px; width:max-content; animation:scroll 40s linear infinite;}
+.revwrap:hover .revtrack{animation-play-state:paused;}
+.qcard{width:380px; background:var(--bg2); border:1px solid var(--line); border-radius:var(--r); padding:28px 30px; white-space:normal;}
+.qcard .st{color:var(--accent); letter-spacing:3px; font-size:13px;}
+.qcard p{font-family:var(--serif); font-size:20px; line-height:1.35; margin:14px 0 16px;}
+.qcard .by{color:var(--muted); font-size:13px; font-weight:500;}
+/* cta */
+.cta{text-align:center;}
+.cta h2{font-size:clamp(2.6rem,7vw,6rem); letter-spacing:-.03em;}
+.cta .sub{color:var(--muted); margin:18px auto 30px; max-width:42ch;}
+/* form */
+.form{max-width:560px; margin:60px auto 0; text-align:left;}
+.form .row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;}
+@media(max-width:560px){ .form .row{grid-template-columns:1fr;} }
+.form input, .form textarea{width:100%; padding:15px 16px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--text); font-family:var(--sans); font-size:15px;}
+.form input::placeholder, .form textarea::placeholder{color:var(--faint);}
+.form button{width:100%; border:none; cursor:pointer; justify-content:center; margin-top:4px;}
+.form .micro{margin-top:12px; color:var(--faint); font-size:12.5px; text-align:center;}
+/* footer */
+footer{border-top:1px solid var(--line); padding:70px 0 36px;}
+.bigword{display:block; width:min(560px,86%); height:auto; margin-bottom:46px;}
+.fcols{display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px;}
+.fcol h4{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); margin-bottom:14px;}
+.fcol a, .fcol p{display:block; color:var(--muted); font-size:14px; margin-bottom:8px;}
+.fcol a:hover{color:var(--accent);}
+.legal{margin-top:44px; padding-top:22px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; color:var(--faint); font-size:12.5px;}
+/* film / long-form ad */
+.film .wrap{display:grid; grid-template-columns:minmax(0,330px) 1fr; gap:52px; align-items:center;}
+@media(max-width:820px){
+  .film .wrap{grid-template-columns:1fr; gap:24px;}
+  .film .wrap>div:first-child{order:2;}
+  .film .wrap>div:nth-child(2){order:1;}
+  .phone{max-width:320px; margin:0 auto; width:100%;}
+}
+@media(max-width:880px){ .hero{min-height:88svh;} }
+@media(max-width:600px){
+  .qcard{width:290px; padding:22px 24px;} .qcard p{font-size:18px;}
+  .pad{padding:62px 0;} .wrap{padding:0 20px;}
+  .band .wrap{padding:56px 20px;} .revhead{margin-bottom:28px;}
+  .manifesto h2{font-size:1.85rem;}
+}
+.phone{position:relative; aspect-ratio:9/16; border-radius:26px; overflow:hidden; border:1px solid var(--line); background:#000;}
+.phone video{width:100%; height:100%; object-fit:cover; display:block;}
+.phone .poster{position:absolute; inset:0; background-size:cover; background-position:center; transition:opacity .4s;}
+.phone .play{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; cursor:pointer; background:rgba(10,14,11,.3); transition:background .3s;}
+.phone .play:hover{background:rgba(10,14,11,.12);}
+.phone .play i{width:76px; height:76px; border-radius:50%; background:var(--accent); color:var(--accentInk); display:flex; align-items:center; justify-content:center; font-size:24px; font-style:normal; padding-left:6px;}
+.phone.playing .poster, .phone.playing .play{opacity:0; pointer-events:none;}
+.film .pts{display:flex; flex-direction:column; gap:16px; margin-top:24px;}
+.film .pt{color:var(--muted); font-size:15px; border-left:2px solid var(--accent); padding-left:14px; border-radius:0;}
+.film .pt b{color:var(--text); font-weight:500; display:block; margin-bottom:2px;}
+/* defensible space */
+.ds .wrap{display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:start;}
+@media(max-width:880px){ .ds .wrap{grid-template-columns:1fr; gap:34px;} }
+.ds .links a{color:var(--accent); border-bottom:1px solid var(--accent); padding-bottom:2px; margin-right:22px; font-size:14px; display:inline-block; margin-top:10px;}
+.zone{display:grid; grid-template-columns:auto 1fr; gap:16px; padding:15px 0; border-bottom:1px solid var(--line);}
+.zone .d{font-family:var(--serif); color:var(--accent); font-size:15px; white-space:nowrap; padding-top:1px;}
+.zone h4{font-size:15px; font-weight:500; margin-bottom:3px;}
+.zone p{font-size:13.5px; color:var(--muted); line-height:1.6;}
+.vidwrap{position:relative; aspect-ratio:16/9; border-radius:var(--r); overflow:hidden; border:1px solid var(--line); background:var(--bg2); cursor:pointer; margin-top:22px;}
+.vidwrap img{width:100%; height:100%; object-fit:cover; display:block;}
+.vidwrap iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+.vidwrap .play{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(10,14,11,.35); transition:background .3s;}
+.vidwrap:hover .play{background:rgba(10,14,11,.15);}
+.vidwrap .play i{width:62px; height:62px; border-radius:50%; background:var(--accent); color:var(--accentInk); display:flex; align-items:center; justify-content:center; font-size:20px; font-style:normal; padding-left:5px;}
+.vidcap{font-size:12.5px; color:var(--faint); margin-top:10px;}
+.srcnote{font-size:12px; color:var(--faint); margin-top:18px; line-height:1.7;}
+.srcnote a{color:var(--muted); border-bottom:1px solid var(--line);}
+/* credentials */
+.creds{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+@media(max-width:760px){ .creds{grid-template-columns:1fr;} }
+.cred{background:var(--bg2); border:1px solid var(--line); border-radius:var(--r); padding:22px 24px;}
+.cred .tick{display:block; color:var(--accent); font-size:11px; letter-spacing:.22em; text-transform:uppercase; font-weight:600; margin-bottom:10px;}
+.cred b{display:block; font-weight:500; font-size:16px; margin-bottom:6px;}
+.cred span:not(.tick){color:var(--muted); font-size:13.5px; line-height:1.65; display:block;}
+/* sticky mobile action bar */
+.mobar{display:none;}
+@media(max-width:880px){
+  .mobar{display:grid; grid-template-columns:1fr 1fr; gap:10px; position:fixed; left:0; right:0; bottom:0; z-index:70;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));
+    background:rgba(14,18,15,.94); backdrop-filter:blur(12px); border-top:1px solid var(--line);}
+  .mobar a{display:flex; align-items:center; justify-content:center; height:50px; border-radius:100px; font-size:15px; font-weight:600; letter-spacing:.01em;}
+  .mobar .call{border:1px solid rgba(255,255,255,.42); color:var(--text);}
+  .mobar .quote{background:var(--accent); color:var(--accentInk);}
+  footer{padding-bottom:104px;}
+  .scrolldown{display:none;}
+}
+.note{position:relative; z-index:60; background:#000; color:#888; font-size:12px; text-align:center; padding:6px;}
+.fir{fill:var(--accent);}
+</style>
+<meta name="description" content="ISA Certified arborist serving Summit County, Colorado. Fire mitigation, technical and hazard tree removal, storm response, and pruning — climbed by hand, no heavy machinery. Free estimates."/>
+<link rel="canonical" href="https://treeguytrenton.com/"/>
+<meta name="theme-color" content="#0E120F"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Tree Guy LLC"/>
+<meta property="og:title" content="Tree Guy LLC — Expert tree care in Summit County, Colorado"/>
+<meta property="og:description" content="ISA Certified arborist serving Summit County, Colorado. Fire mitigation, technical and hazard tree removal, storm response, and pruning — climbed by hand, no heavy machinery. Free estimates."/>
+<meta property="og:url" content="https://treeguytrenton.com/"/>
+<meta property="og:image" content="https://treeguytrenton.com/media/hero-poster.jpg"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Tree Guy LLC — Expert tree care in Summit County, Colorado"/>
+<meta name="twitter:description" content="ISA Certified arborist serving Summit County, Colorado. Fire mitigation, technical and hazard tree removal, storm response, and pruning — climbed by hand, no heavy machinery. Free estimates."/>
+<meta name="twitter:image" content="https://treeguytrenton.com/media/hero-poster.jpg"/>
+<link rel="icon" href="media/logo/favicon.svg" type="image/svg+xml"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "additionalType": "https://schema.org/HomeAndConstructionBusiness",
+  "name": "Tree Guy LLC",
+  "url": "https://treeguytrenton.com/",
+  "image": "https://treeguytrenton.com/media/hero-poster.jpg",
+  "telephone": "+1-605-209-5516",
+  "email": "treeguytrenton@gmail.com",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Breckenridge",
+    "addressRegion": "CO",
+    "postalCode": "80424",
+    "addressCountry": "US"
+  },
+  "areaServed": [
+    {"@type":"City","name":"Breckenridge"}, {"@type":"City","name":"Frisco"},
+    {"@type":"City","name":"Dillon"}, {"@type":"City","name":"Silverthorne"},
+    {"@type":"City","name":"Keystone"}, {"@type":"City","name":"Copper Mountain"},
+    {"@type":"City","name":"Blue River"},
+    {"@type":"AdministrativeArea","name":"Summit County, Colorado"}
+  ],
+  "founder": {"@type":"Person","name":"Trenton Meiron","jobTitle":"ISA Certified Arborist"},
+  "knowsAbout": ["Wildfire mitigation","Defensible space","Technical tree removal","Storm damage response","Tree pruning","Tree risk assessment"],
+  "sameAs": [
+    "https://www.instagram.com/TreeGuyTrenton",
+    "https://www.facebook.com/Treeguytrenton",
+    "https://www.yelp.com/biz/tree-guy-breckenridge",
+    "https://nextdoor.com/pages/tree-guy-llc-breckenridge-co/"
+  ]
+}
+</script>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav class="bar"><div class="wrap">
+  <a class="logo" href="#top" aria-label="Tree Guy LLC — home"><img src="media/logo/treeguy-logo.svg" alt="Tree Guy LLC — Certified Arborist"/></a>
+  <div class="navlinks">
+    <a class="l" href="#services">Services</a>
+    <a class="l" href="#difference">Why us</a>
+    <a class="l" href="#reviews">Reviews</a>
+    <a class="l" href="#quote">Contact</a>
+    <img class="isa" src="media/logo/isa-badge.svg" alt="ISA Certified Arborist" title="ISA Certified Arborist #RM-8450A" width="32" height="46"/>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <video id="heroVid" autoplay muted loop playsinline preload="none" poster="media/hero-poster.jpg"></video>
+  <div class="scrim"></div>
+  <div class="side">Breckenridge, CO &middot; 39.48&deg;N</div>
+  <div class="wrap">
+    <div class="kicker" style="margin-bottom:22px;">Summit County &middot; ISA Certified Arborist</div>
+    <h1>
+      <span class="line"><span>Expert tree care,</span></span>
+      <span class="line"><span>done right.</span></span>
+      <span class="line"><span class="acc">Done fast.</span></span>
+    </h1>
+    <p class="sub">Fire mitigation, technical removals, and storm response. We&rsquo;re expert tree climbers experienced in the most technical removals, who handle your tree work with precision and a light footprint.</p>
+    <div class="cta-row">
+      <a class="b2" href="#quote">Get a free estimate</a>
+      <a class="b2" href="tel:6052095516">Call now<span class="num">(605) 209-5516</span></a>
+    </div>
+    <div class="micro"><span class="star">&#9733;&#9733;&#9733;&#9733;&#9733;</span> &nbsp;5.0 across Google, Yelp &amp; Nextdoor &nbsp;&middot;&nbsp; Licensed &amp; insured &nbsp;&middot;&nbsp; Trusted year after year</div>
+  </div>
+  <div class="scrolldown">Scroll<div class="ln"></div></div>
+</header>
+
+<div class="marquee"><div class="mq" id="mq">
+  <span>ISA Certified Arborist</span><span class="s">&#10022;</span><span>No heavy machinery</span><span class="s">&#10022;</span><span>5.0 &#9733; on Google, Yelp &amp; Nextdoor</span><span class="s">&#10022;</span><span>Owner-trained climbers</span><span class="s">&#10022;</span><span>Licensed &amp; insured</span><span class="s">&#10022;</span><span>We leave no trace</span><span class="s">&#10022;</span>
+  <span>ISA Certified Arborist</span><span class="s">&#10022;</span><span>No heavy machinery</span><span class="s">&#10022;</span><span>5.0 &#9733; on Google, Yelp &amp; Nextdoor</span><span class="s">&#10022;</span><span>Owner-trained climbers</span><span class="s">&#10022;</span><span>Licensed &amp; insured</span><span class="s">&#10022;</span><span>We leave no trace</span><span class="s">&#10022;</span>
+</div></div>
+
+<section class="pad manifesto"><div class="wrap">
+  <p class="kicker reveal" style="margin-bottom:26px;">The difference</p>
+  <h2 class="reveal">We work trees other crews won&rsquo;t touch &mdash; <span class="acc">by hand,</span> in the canopy, with <span class="acc">zero heavy machinery.</span> With a light footprint, we leave the property <span class="acc">cleaner than we found it.</span></h2>
+</div></section>
+
+<section class="pad" id="services" style="padding-top:20px;"><div class="wrap">
+  <div class="revhead reveal">
+    <div><p class="kicker" style="margin-bottom:14px;">What we do</p><h2 style="font-size:clamp(2rem,4vw,3.2rem);">Services</h2></div>
+    <p style="color:var(--muted); max-width:54ch;">From defensible space to the technical removals most crews avoid &mdash; done with rope, rigging, and skill.</p>
+  </div>
+  <div class="svc reveal">
+    <div class="svc-list" id="svcList">
+      <div class="svc-row" data-i="0"><span class="num">01</span><h3>Fire Mitigation &amp; Defensible Space</h3><span class="arr">&#8594;</span><p>What homeowners call us for most &mdash; many every season. We walk your property with you, then thin and clear fuels to firewise standards with minimal impact to the trees you keep.</p></div>
+      <div class="svc-row" data-i="1"><span class="num">02</span><h3>Technical &amp; Hazard Removal</h3><span class="arr">&#8594;</span><p>Dead, leaning, beetle-killed, or tight against the house. Rope, rigging, and climbing skill instead of cranes &mdash; precision, minimal impact, no added damage.</p></div>
+      <div class="svc-row" data-i="2"><span class="num">03</span><h3>Storm &amp; Emergency Response</h3><span class="arr">&#8594;</span><p>A tree on your home or driveway? We answer and show up &mdash; often the same day &mdash; and get you back up and running quickly.</p></div>
+      <div class="svc-row" data-i="3"><span class="num">04</span><h3>Pruning, Health &amp; Risk Assessment</h3><span class="arr">&#8594;</span><p>Prune for safety, structure, and views; treat high-altitude pests; ISA risk assessments so you know what to watch, treat, or remove.</p></div>
+    </div>
+    <div class="svc-media" id="svcMedia">
+      <div class="pane on"><video muted loop playsinline preload="metadata" poster="media/clips/svc-fire-v2.jpg"><source src="media/clips/svc-fire-v2.mp4" type="video/mp4"></video><span class="tag">Fire mitigation &amp; defensible space</span></div>
+      <div class="pane"><video muted loop playsinline preload="none" poster="media/clips/svc-technical-v2.jpg"><source src="media/clips/svc-technical-v2.mp4" type="video/mp4"></video><span class="tag">Technical &amp; hazard removal</span></div>
+      <div class="pane"><video muted loop playsinline preload="none" poster="media/clips/svc-storm-v6.jpg"><source src="media/clips/svc-storm-v6.mp4" type="video/mp4"></video><span class="tag">Storm &amp; emergency response</span></div>
+      <div class="pane"><video muted loop playsinline preload="none" poster="media/clips/svc-pruning-v2.jpg"><source src="media/clips/svc-pruning-v2.mp4" type="video/mp4"></video><span class="tag">Pruning, health &amp; risk assessment</span></div>
+    </div>
+  </div>
+  <div class="svc-mobile reveal">
+    <div class="svc-track" id="svcTrack"></div>
+    <div class="svc-dots" id="svcDots"></div>
+    <div class="svc-swipe">Swipe &rarr;</div>
+  </div>
+  <p class="svc-foot reveal">Also: firewood delivery &amp; on-site splitting &middot; commercial &amp; ski-resort &middot; lot clearing</p>
+</div></section>
+
+<section class="pad stats"><div class="wrap">
+  <div class="grid">
+    <div class="stat reveal"><div class="n"><span class="count" data-to="5" data-dec="1">0.0</span></div><div class="lab">Star rating across every platform</div></div>
+    <div class="stat reveal"><div class="n"><span class="count" data-to="24">0</span>+</div><div class="lab">Five-star reviews and counting</div></div>
+    <div class="stat reveal"><div class="n"><span class="count" data-to="12">0</span></div><div class="lab">Neighborhood Favorite, Nextdoor</div></div>
+    <div class="stat reveal"><div class="n"><span class="count" data-to="100">0</span>%</div><div class="lab">Hand-climbed &mdash; no heavy machinery</div></div>
+  </div>
+</div></section>
+
+<section class="pad"><div class="wrap">
+  <div class="revhead reveal"><div><p class="kicker" style="margin-bottom:14px;">Recent work</p><h2 style="font-size:clamp(2rem,4vw,3.2rem);">See the difference</h2></div><p style="color:var(--muted); max-width:54ch;">Drag the slider to compare &mdash; real jobs, before and after.</p></div>
+  <div class="reveal" id="baWrap">
+    <div class="ba-stage">
+      <div class="ba portrait" id="ba">
+        <div class="layer after"><img id="baAfter" src="media/ba/job2-after.jpg" alt="After tree work"></div>
+        <div class="layer before"><img id="baBefore" src="media/ba/job2-before.jpg" alt="Before tree work"></div>
+        <span class="badge bl">Before</span><span class="badge br">After</span>
+        <div class="handle"></div>
+        <div class="track"></div>
+        <div class="hint" id="baHint">Slide to compare</div>
+        <div class="knob" id="knob">&#8596;</div>
+      </div>
+    </div>
+    <div class="ba-cap">
+      <div class="ba-nav">
+        <div class="ba-count" id="baCount">01 / 04</div>
+        <button class="ba-arrow" id="baPrev" aria-label="Previous job">&#8592;</button>
+        <button class="ba-arrow" id="baNext" aria-label="Next job">&#8594;</button>
+      </div>
+    </div>
+    <div class="ba-dots" id="baDots"></div>
+  </div>
+</div></section>
+
+<section class="pad film" id="film"><div class="wrap">
+  <div class="reveal">
+    <div class="phone" id="phone">
+      <video id="adVideo" playsinline preload="none" poster="media/clips/ad-long.jpg"><source src="media/clips/ad-long.mp4" type="video/mp4"></video>
+      <div class="poster" style="background-image:url('media/clips/ad-long.jpg');"></div>
+      <div class="play" id="adPlay" role="button" aria-label="Play film"><i>&#9654;</i></div>
+    </div>
+  </div>
+  <div class="reveal">
+    <p class="kicker" style="margin-bottom:16px;">Watch</p>
+    <h2 style="font-size:clamp(2rem,4.4vw,3.2rem);">See how we work.</h2>
+    <p style="color:var(--muted); margin-top:14px; max-width:44ch;">Ninety seconds in the canopy &mdash; ropes, rigging, and a chainsaw eighty feet up. This is what &ldquo;no heavy machinery&rdquo; actually looks like on your property.</p>
+    <div class="pts">
+      <div class="pt"><b>Roped and climbed, not craned</b>Every removal is rigged and lowered by hand.</div>
+      <div class="pt"><b>Tight to structures</b>We work trees other crews won&rsquo;t touch &mdash; inches from roofs and decks.</div>
+      <div class="pt"><b>Clean when we leave</b>Brush chipped, rounds stacked, property back to normal.</div>
+    </div>
+  </div>
+</div></section>
+
+<section class="pad" id="difference"><div class="wrap">
+  <div class="revhead reveal"><div><p class="kicker" style="margin-bottom:14px;">Why Tree Guy</p><h2 style="font-size:clamp(2rem,4vw,3.2rem);">What backs it up</h2></div><p style="color:var(--muted); max-width:54ch;">Credentials you can check, not adjectives.</p></div>
+  <div class="creds reveal">
+    <div class="cred"><span class="tick">Certified</span><b>ISA Certified Arborist &middot; #RM-8450A</b><span>Trenton is a working climber who personally trains every member of the crew.</span></div>
+    <div class="cred"><span class="tick">Insured</span><b>Licensed &amp; insured &middot; $2M liability</b><span>Certificate of insurance available on request, before work starts.</span></div>
+    <div class="cred"><span class="tick">Recognized</span><b>State forestry contractors list</b><span>Our capabilities are recognized on the Colorado State Forest Service&rsquo;s Summit County contractors list.</span></div>
+    <div class="cred"><span class="tick">Rated</span><b>5.0 stars &middot; 26+ reviews</b><span>24 on Google, plus Yelp and Nextdoor &mdash; and a Neighborhood Favorite in 12 neighborhoods.</span></div>
+  </div>
+</div></section>
+
+<section class="pad" id="reviews"><div class="wrap" style="margin-bottom:40px;">
+  <div class="revhead reveal"><div><p class="kicker" style="margin-bottom:14px;">What neighbors say</p><h2 style="font-size:clamp(2rem,4vw,3.2rem);">5.0 stars, year after year</h2></div><p style="color:var(--muted);">Google &middot; Yelp &middot; Nextdoor</p></div>
+</div>
+<div class="revwrap"><div class="revtrack">
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;Simply the best tree guy in Summit.&rdquo;</p><div class="by">Matt S. &middot; Google</div></div>
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;The best tree service guy I&rsquo;ve ever had &mdash; and I&rsquo;ve been cutting wood for 30+ years.&rdquo;</p><div class="by">Jamie B. &middot; Google</div></div>
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;His prices are fair, and he completes the work in a professional and timely fashion.&rdquo;</p><div class="by">Jim B. &middot; Google</div></div>
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;Removed several very large lodgepole pines with minimal impact to other trees on our lot.&rdquo;</p><div class="by">Mary Anne M. &middot; Google</div></div>
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;Cleaned everything up such that you would have never known he was there.&rdquo;</p><div class="by">K D. &middot; Yelp</div></div>
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;Simply the best tree guy in Summit.&rdquo;</p><div class="by">Matt S. &middot; Google</div></div>
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;The best tree service guy I&rsquo;ve ever had &mdash; and I&rsquo;ve been cutting wood for 30+ years.&rdquo;</p><div class="by">Jamie B. &middot; Google</div></div>
+  <div class="qcard"><div class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p>&ldquo;His prices are fair, and he completes the work in a professional and timely fashion.&rdquo;</p><div class="by">Jim B. &middot; Google</div></div>
+</div></div>
+
+<section class="pad ds" id="defensible"><div class="wrap">
+  <div class="reveal">
+    <p class="kicker" style="margin-bottom:16px;">Wildfire preparedness</p>
+    <h2 style="font-size:clamp(2rem,4.2vw,3rem);">Defensible space, explained.</h2>
+    <p style="color:var(--muted); margin-top:14px; max-width:46ch;">Defensible space is the managed area around your home that slows a wildfire down &mdash; and gives firefighters somewhere safe to work. It matters here: lodgepole pine makes up most of Summit County&rsquo;s forest, and it burns readily.</p>
+    <div style="margin-top:22px;">
+      <div class="zone"><span class="d">0&ndash;5 ft</span><div><h4>Immediate zone</h4><p>Closest to the house. Keep it non-combustible: clear needles and debris from the roof and gutters, screen vents, and move anything flammable away from walls, decks, and porches.</p></div></div>
+      <div class="zone"><span class="d">5&ndash;30 ft</span><div><h4>Intermediate zone</h4><p>Break up the fuel. Prune branches roughly 6&ndash;10 ft off the ground, leave space between tree crowns, keep the canopy back from the house, and use drives and patios as natural fuel breaks.</p></div></div>
+      <div class="zone"><span class="d">30&ndash;100 ft</span><div><h4>Extended zone</h4><p>Slow the fire before it arrives. Clear heavy ground litter and dead material, thin the small conifers coming up between mature trees, and widen the spacing between canopies as you move out.</p></div></div>
+    </div>
+    <p style="color:var(--muted); font-size:14.5px; margin-top:20px; max-width:46ch;">Under Colorado&rsquo;s HB25-1182, the mitigation work you do can also factor into your wildfire risk score and your homeowner&rsquo;s coverage. Your fire district offers a <b style="color:var(--text); font-weight:500;">free assessment</b> &mdash; and we&rsquo;ll walk the property with you before anything gets cut.</p>
+    <div class="links" style="margin-top:12px;">
+      <a href="https://www.rwbfire.org/a-mitigation-inspection-request">Free assessment &middot; south county</a>
+      <a href="https://www.summitfire.org/free-wildfire-preparation-and-defensible-space-consultations">Free assessment &middot; north &amp; central</a>
+    </div>
+    <p class="srcnote">Zone guidance summarized from <a href="https://summitcountyco.gov/services/community_development/csu_extension/forest_health/defensible_space.php">Summit County</a> and the NFPA &mdash; see the county page for full detail. Our capabilities are recognized on the Colorado State Forest Service&rsquo;s Summit County contractors list.</p>
+  </div>
+  <div class="reveal">
+    <svg viewBox="0 0 520 400" role="img" aria-label="Diagram of the three defensible space zones around a home" style="width:100%; height:auto;">
+      <rect x="8" y="8" width="504" height="384" rx="18" fill="rgba(194,236,90,.05)" stroke="rgba(194,236,90,.30)" stroke-width="1" stroke-dasharray="6 6"/>
+      <rect x="92" y="76" width="336" height="248" rx="14" fill="rgba(194,236,90,.07)" stroke="rgba(194,236,90,.45)" stroke-width="1" stroke-dasharray="6 6"/>
+      <rect x="176" y="140" width="168" height="120" rx="10" fill="rgba(194,236,90,.10)" stroke="rgba(194,236,90,.7)" stroke-width="1"/>
+      <rect x="222" y="172" width="76" height="56" rx="4" fill="#C2EC5A"/>
+      <path d="M222 172 L260 150 L298 172 Z" fill="#C2EC5A"/>
+      <text x="260" y="206" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#16210A">HOME</text>
+      <text x="260" y="132" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="13" fill="#C2EC5A">0&ndash;5 ft</text>
+      <text x="260" y="66" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="13" fill="#C2EC5A">5&ndash;30 ft</text>
+      <text x="260" y="368" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="13" fill="#C2EC5A">30&ndash;100 ft</text>
+      <text x="260" y="30" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" letter-spacing="3" fill="#9BA39B">THE HOME IGNITION ZONE</text>
+    </svg>
+    <div class="vidwrap" id="ytFacade" role="button" aria-label="Play Summit County defensible space video">
+      <img src="https://img.youtube.com/vi/RqKFDDBGd5o/hqdefault.jpg" alt="Summit County defensible space video">
+      <div class="play"><i>&#9654;</i></div>
+    </div>
+    <p class="vidcap">Summit County&rsquo;s guide to defensible space (via the county&rsquo;s YouTube channel).</p>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <div class="reveal"><h2>Part of the Summit County free chipping program.</h2><p>One of the easiest ways to cut wildfire fuel around your home. Stack your slash, find your neighborhood&rsquo;s chipping week, and we&rsquo;ll help you make the most of it.</p>
+    <div class="links"><a href="https://summitcountyco.gov/services/community_development/csu_extension/forest_health/chipping_program.php">Chipping map &amp; guidelines</a><a href="https://summitcountyco.gov/1308/Defensible-Space-Partners-Program">Defensible Space Partners</a></div>
+  </div>
+  <div class="reveal"><h2 style="font-size:clamp(1.4rem,2.4vw,2rem);">Resorts, HOAs &amp; property managers</h2><p>Routine maintenance and fast on-mountain storm response, done crane-free to protect grounds and infrastructure.</p><div class="links"><a href="#quote">Talk commercial work</a></div></div>
+</div></section>
+
+<section class="pad cta" id="quote"><div class="wrap">
+  <p class="kicker reveal" style="margin-bottom:18px;">Free &middot; No obligation &middot; Fast response</p>
+  <h2 class="reveal">Let&rsquo;s clear<br>the air.</h2>
+  <p class="sub reveal">Tell us what you need &mdash; we&rsquo;ll walk your property and get you a fair, clear quote.</p>
+  <!-- STEP: replace FORM_ID below with your Formspree endpoint, e.g. action="https://formspree.io/f/abcdwxyz" -->
+  <form class="form reveal" id="quoteForm" action="https://formspree.io/f/FORM_ID" method="POST">
+    <div class="row">
+      <input name="name" type="text" placeholder="Name" aria-label="Your name" required/>
+      <input name="phone" type="tel" placeholder="Phone" aria-label="Your phone number" required/>
+    </div>
+    <div class="row">
+      <input name="town" type="text" placeholder="Town" aria-label="Your town"/>
+      <input name="email" type="email" placeholder="Email (optional)" aria-label="Your email"/>
+    </div>
+    <textarea name="message" rows="3" placeholder="How can we help?" aria-label="How can we help"></textarea>
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; opacity:0;"/>
+    <input type="hidden" name="_subject" value="New quote request — treeguytrenton.com"/>
+    <button class="btn" type="submit">Get my free quote</button>
+    <div class="micro" id="formMsg" role="status" aria-live="polite">We respond fast &mdash; often the same day.</div>
+  </form>
+</div></section>
+
+<footer><div class="wrap">
+  <img class="bigword" src="media/logo/treeguy-logo.svg" alt="Tree Guy LLC — Certified Arborist"/>
+  <div class="fcols">
+    <div class="fcol"><h4>Contact</h4><a href="tel:6052095516">(605) 209-5516</a><a href="mailto:treeguytrenton@gmail.com">treeguytrenton@gmail.com</a><p>Open 24 hours</p></div>
+    <div class="fcol"><h4>Services</h4><a href="#services">Fire mitigation</a><a href="#services">Technical removal</a><a href="#services">Storm response</a><a href="#services">Pruning &amp; health</a></div>
+    <div class="fcol"><h4>Service area</h4><p>Breckenridge &middot; Frisco</p><p>Dillon &middot; Silverthorne</p><p>Keystone &middot; Copper &middot; Blue River</p></div>
+    <div class="fcol"><h4>Follow</h4><a href="https://instagram.com/TreeGuyTrenton">Instagram @TreeGuyTrenton</a><a href="https://facebook.com/Treeguytrenton">Facebook Treeguytrenton</a></div>
+  </div>
+  <div class="legal"><span>&copy; 2026 Tree Guy LLC &middot; ISA Certified Arborist #RM-8450A &middot; Licensed &amp; insured</span><span>Summit County, Colorado</span></div>
+</div></footer>
+
+<div class="mobar">
+  <a class="call" href="tel:6052095516">Call now</a>
+  <a class="quote" href="#quote">Free estimate</a>
+</div>
+
+<script>
+// hero video: pick a light file on phones / slow or data-saver connections
+(function(){ const v=document.getElementById('heroVid'); if(!v) return;
+  const c=navigator.connection||{};
+  const light = window.matchMedia('(max-width:900px)').matches || c.saveData===true || /(^|-)2g$/.test(c.effectiveType||'');
+  v.src = light ? 'media/hero-mobile.mp4' : 'media/hero.mp4';
+  v.load(); v.play().catch(()=>{});
+})();
+// nav scrolled
+const bar=document.querySelector('nav.bar');
+addEventListener('scroll',()=>{ bar.classList.toggle('scrolled', scrollY>40); });
+// reveal
+const io=new IntersectionObserver((es)=>{es.forEach((e,i)=>{ if(e.isIntersecting){ e.target.style.transitionDelay=(e.target.dataset.d||0)+'ms'; e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:.15});
+document.querySelectorAll('.reveal').forEach((el,i)=>{ io.observe(el); });
+// stagger stat cards
+document.querySelectorAll('.stats .stat').forEach((el,i)=>{ el.dataset.d=i*90; });
+document.querySelectorAll('#services .svc-row').forEach((el,i)=>{});
+// services hover
+const rows=document.querySelectorAll('#svcList .svc-row');
+const panes=document.querySelectorAll('#svcMedia .pane');
+function showPane(i){ panes.forEach((p,j)=>{ const on=j===i; p.classList.toggle('on',on); const v=p.querySelector('video');
+  if(v){ if(on){ v.play().catch(()=>{}); } else { v.pause(); } } }); }
+function selectSvc(i){ showPane(i); rows.forEach((r,j)=>r.classList.toggle('active',j===i)); }
+rows.forEach(r=>{
+  r.addEventListener('mouseenter',()=>selectSvc(+r.dataset.i));
+  r.addEventListener('click',()=>selectSvc(+r.dataset.i)); // touch devices
+});
+// mobile: swipeable service cards, built from the same copy as the desktop list
+(function(){
+  const track=document.getElementById('svcTrack'), dots=document.getElementById('svcDots');
+  if(!track) return;
+  const clips=['svc-fire-v2','svc-technical-v2','svc-storm-v6','svc-pruning-v2'];
+  rows.forEach((r,i)=>{
+    const h=r.querySelector('h3').textContent.trim();
+    const pe=r.querySelector('p'); const p=pe?pe.textContent.trim():'';
+    const s=document.createElement('div'); s.className='svc-slide';
+    s.innerHTML='<div class="vid"><video muted loop playsinline preload="none" poster="media/clips/'+clips[i]+'.jpg">'
+      +'<source src="media/clips/'+clips[i]+'.mp4" type="video/mp4"></video></div>'
+      +'<div class="body"><h3>'+h+'</h3><p>'+p+'</p></div>';
+    track.appendChild(s);
+    const d=document.createElement('div'); d.className='d'+(i?'':' on'); dots.appendChild(d);
+  });
+  const slides=[...track.children];
+  function sync(){
+    const c=track.scrollLeft+track.clientWidth/2; let idx=0, best=1e9;
+    slides.forEach((s,i)=>{ const m=s.offsetLeft+s.offsetWidth/2, d=Math.abs(m-c); if(d<best){best=d; idx=i;} });
+    [...dots.children].forEach((d,i)=>d.classList.toggle('on',i===idx));
+    slides.forEach((s,i)=>{ const v=s.querySelector('video'); if(!v) return; i===idx? v.play().catch(()=>{}) : v.pause(); });
+  }
+  let t; track.addEventListener('scroll',()=>{ clearTimeout(t); t=setTimeout(sync,90); },{passive:true});
+  new IntersectionObserver((es,o)=>es.forEach(e=>{ if(e.isIntersecting){ sync(); o.disconnect(); } }),{threshold:.3}).observe(track);
+})();
+// start the first clip when the services block scrolls into view
+const svcIO=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ showPane(0); svcIO.disconnect(); } }),{threshold:.25});
+svcIO.observe(document.getElementById('svcMedia'));
+// count up
+function countUp(el){ const to=+el.dataset.to, dec=+(el.dataset.dec||0); let s=null, dur=1400;
+  function step(t){ if(!s)s=t; let p=Math.min((t-s)/dur,1); p=1-Math.pow(1-p,3); el.textContent=(to*p).toFixed(dec); if(p<1)requestAnimationFrame(step); else el.textContent=to.toFixed(dec); }
+  requestAnimationFrame(step); }
+const cio=new IntersectionObserver((es)=>{es.forEach(e=>{ if(e.isIntersecting){ countUp(e.target); cio.unobserve(e.target);} });},{threshold:.6});
+document.querySelectorAll('.count').forEach(c=>cio.observe(c));
+// quote form: submit in-place, keep the visitor on the page
+(function(){
+  const f=document.getElementById('quoteForm'), msg=document.getElementById('formMsg');
+  if(!f) return;
+  const restingText=msg.textContent;
+  f.addEventListener('submit', async e=>{
+    e.preventDefault();
+    if(f.action.includes('FORM_ID')){
+      msg.textContent='Form not connected yet — add the Formspree endpoint to index.html.';
+      msg.style.color='#E2B34B'; return;
+    }
+    const btn=f.querySelector('button[type=submit]'), label=btn.textContent;
+    btn.textContent='Sending…'; btn.disabled=true; msg.textContent=restingText; msg.style.color='';
+    try{
+      const r=await fetch(f.action,{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}});
+      if(!r.ok) throw new Error('bad response');
+      f.reset(); btn.textContent='Sent';
+      msg.textContent='Thanks — we’ve got it. We’ll be in touch shortly.'; msg.style.color='var(--accent)';
+    }catch(err){
+      btn.textContent=label; btn.disabled=false;
+      msg.textContent='Something went wrong — please call (605) 209-5516.'; msg.style.color='#E2846B';
+    }
+  });
+})();
+// long-form film: click to play with sound
+const phone=document.getElementById('phone'), adVideo=document.getElementById('adVideo');
+document.getElementById('adPlay').addEventListener('click',()=>{
+  phone.classList.add('playing');
+  adVideo.setAttribute('controls','');            // give them pause / scrub / volume
+  adVideo.play().catch(()=>{});
+});
+adVideo.addEventListener('ended',()=>{ phone.classList.remove('playing'); adVideo.removeAttribute('controls'); });
+// never let audio keep running once it's off screen
+new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting && !adVideo.paused) adVideo.pause();
+}),{threshold:0.3}).observe(phone);
+// ...or when the tab goes to the background
+document.addEventListener('visibilitychange',()=>{ if(document.hidden && !adVideo.paused) adVideo.pause(); });
+// county video: load the embed only when asked
+const yt=document.getElementById('ytFacade');
+yt.addEventListener('click',()=>{ yt.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/RqKFDDBGd5o?autoplay=1&rel=0" title="Summit County defensible space" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'; });
+// before/after carousel — swap job images/labels here when real photos are ready
+const ba=document.getElementById('ba');
+const baBefore=document.getElementById('baBefore'), baAfter=document.getElementById('baAfter');
+const baCount=document.getElementById('baCount'), baDots=document.getElementById('baDots');
+// real job photos — add more by appending {n, o} (o = 'portrait' | 'landscape')
+const jobs=[
+ {n:2,o:'portrait'},{n:1,o:'portrait'},{n:3,o:'portrait'},{n:4,o:'portrait'},{n:5,o:'portrait'},
+ {n:6,o:'portrait'},{n:7,o:'portrait'},{n:8,o:'portrait'},{n:9,o:'portrait'},{n:10,o:'landscape'},
+];
+let cur=0, drag=false;
+jobs.forEach((_,i)=>{ const d=document.createElement('div'); d.className='ba-dot'+(i===0?' on':''); d.addEventListener('click',()=>{cur=i; renderBA();}); baDots.appendChild(d); });
+// preload the rest only once the section is in view, so first paint stays light
+const preIO=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){
+  jobs.forEach(j=>['before','after'].forEach(t=>{ const im=new Image(); im.src='media/ba/job'+j.n+'-'+t+'.jpg'; }));
+  preIO.disconnect(); } }),{rootMargin:'400px'});
+function renderBA(){ const j=jobs[cur];
+  baBefore.src='media/ba/job'+j.n+'-before.jpg'; baAfter.src='media/ba/job'+j.n+'-after.jpg';
+  ba.classList.toggle('portrait', j.o==='portrait'); ba.classList.toggle('landscape', j.o!=='portrait');
+  baCount.textContent=String(cur+1).padStart(2,'0')+' / '+String(jobs.length).padStart(2,'0');
+  ba.style.setProperty('--pos','50%'); [...baDots.children].forEach((d,i)=>d.classList.toggle('on',i===cur)); }
+document.getElementById('baPrev').addEventListener('click',()=>{cur=(cur-1+jobs.length)%jobs.length; renderBA();});
+document.getElementById('baNext').addEventListener('click',()=>{cur=(cur+1)%jobs.length; renderBA();});
+function setPos(x){ const r=ba.getBoundingClientRect(); let p=((x-r.left)/r.width)*100; p=Math.max(2,Math.min(98,p)); ba.style.setProperty('--pos',p+'%'); }
+function touched(){ ba.classList.add('touched'); }
+// press anywhere on the image to jump the divider there
+ba.addEventListener('pointerdown',e=>{drag=true; touched(); setPos(e.clientX);});
+addEventListener('pointermove',e=>{ if(drag) setPos(e.clientX); });
+// mouse users: the wipe simply follows the cursor across the image — no clicking needed
+ba.addEventListener('pointermove',e=>{ if(!drag && e.pointerType==='mouse'){ touched(); setPos(e.clientX); } });
+// gentle auto-rotate that pauses on interaction
+let timer=null, hovering=false, resumeT=null;
+function nextJob(){ cur=(cur+1)%jobs.length; renderBA(); }
+function playBA(){ stopBA(); if(!hovering) timer=setInterval(nextJob,5000); }
+function stopBA(){ if(timer){ clearInterval(timer); timer=null; } }
+const baWrap=document.getElementById('baWrap');
+baWrap.addEventListener('mouseenter',()=>{ hovering=true; stopBA(); });
+baWrap.addEventListener('mouseleave',()=>{ hovering=false; playBA(); });
+baWrap.addEventListener('pointerdown',()=>{ stopBA(); clearTimeout(resumeT); });
+addEventListener('pointerup',()=>{ drag=false; clearTimeout(resumeT); resumeT=setTimeout(()=>{ if(!hovering) playBA(); }, 4000); });
+renderBA();
+preIO.observe(baWrap);
+// hold on job 01 until the section is actually on screen, then start rotating
+const startIO=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){ cur=0; renderBA(); playBA(); startIO.disconnect(); }
+}),{threshold:.35});
+startIO.observe(baWrap);
+</script>
+</body>
+</html>
